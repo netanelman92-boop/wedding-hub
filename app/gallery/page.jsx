@@ -28,42 +28,52 @@ export default function Gallery() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-stone-100 p-6">
-      <div className="flex items-center justify-between">
-        <a href="/" className="bg-white px-4 py-2 rounded-full shadow font-bold">
-          חזרה
-        </a>
+    <div
+      className="min-h-screen bg-cover bg-center p-6 relative"
+      style={{ backgroundImage: "url('/images/gallery-bg.jpeg')" }}
+    >
+      <div className="absolute inset-0 bg-black/50"></div>
 
-        <button
-          onClick={fetchImages}
-          disabled={isLoading}
-          className="bg-black text-white px-4 py-2 rounded-full shadow font-bold disabled:opacity-50"
-        >
-          {isLoading ? "מרענן..." : "רענן גלריה"}
-        </button>
-      </div>
+      <div className="relative z-10">
+        <div className="flex items-center justify-between">
+          <a
+            href="/"
+            className="bg-white/90 px-4 py-2 rounded-full shadow font-bold"
+          >
+            חזרה
+          </a>
 
-      <h1 className="text-3xl font-bold text-center mt-6">
-        גלריית חתונה 🖼️
-      </h1>
-
-      {images.length === 0 ? (
-        <p className="text-center mt-10 text-stone-600">
-          עדיין לא הועלו תמונות
-        </p>
-      ) : (
-        <div className="grid grid-cols-2 gap-4 mt-6">
-          {images.map((img, index) => (
-            <img
-              key={index}
-              src={img.image_url}
-              alt={`תמונה ${index + 1}`}
-              onClick={() => setSelectedImage(img.image_url)}
-              className="h-48 w-full object-cover rounded-2xl shadow cursor-pointer"
-            />
-          ))}
+          <button
+            onClick={fetchImages}
+            disabled={isLoading}
+            className="bg-black text-white px-4 py-2 rounded-full shadow font-bold disabled:opacity-50"
+          >
+            {isLoading ? "מרענן..." : "רענן גלריה"}
+          </button>
         </div>
-      )}
+
+        <h1 className="text-3xl font-bold text-center mt-6 text-white">
+          גלריית חתונה 🖼️
+        </h1>
+
+        {images.length === 0 ? (
+          <p className="text-center mt-10 text-white font-bold">
+            עדיין לא הועלו תמונות
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 gap-4 mt-6">
+            {images.map((img, index) => (
+              <img
+                key={index}
+                src={img.image_url}
+                alt={`תמונה ${index + 1}`}
+                onClick={() => setSelectedImage(img.image_url)}
+                className="h-48 w-full object-cover rounded-2xl shadow cursor-pointer border-2 border-white/70"
+              />
+            ))}
+          </div>
+        )}
+      </div>
 
       {selectedImage && (
         <div

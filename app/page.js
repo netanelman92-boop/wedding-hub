@@ -5,10 +5,10 @@ export default function Home() {
     <main
       className="min-h-screen bg-cover flex items-center justify-center p-6"
 style={{ 
-  backgroundImage: "url('/images/couple-bg.jpeg')",
+  backgroundImage: "url('/images/home-bg.jpeg')",
   backgroundPosition: "center 30%"
 }}
-      style={{ backgroundImage: "url('/images/couple-bg.jpeg')" }}
+      style={{ backgroundImage: "url('/images/home-bg.jpeg')" }}
     >
       <div className="absolute inset-0 bg-black/50"></div>
 
