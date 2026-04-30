@@ -37,7 +37,7 @@ export default function Trivia() {
   };
 
   const getMessage = () => {
-    if (score <= 1) return "וואלה... אנחנו צריכים לשבת יותר 😂";
+    if (score <= 1) return "וואלה... אנחנו צריכים לשבת יותר ";
     if (score <= 3) return "לא רע בכלל! אבל לא יזיק לשבת על איזה קפה 😎";
     if (score === 4) return "יפה מאוד! אתם באמת חברים טובים ❤️";
     return "ימלחיצים מה אתם עוקבים אחרינו?!! 🥂";
@@ -60,7 +60,7 @@ export default function Trivia() {
 
           <a
             href="/upload"
-            className="mt-4 rounded-2xl bg-black px-6 py-4 text-white font-bold shadow"
+            className="mt-4 rounded-2xl bg-black px-5 py-3 text-white font-bold shadow active:scale-95 transition"
           >
             המשך להעלאת תמונה 📸
           </a>
@@ -77,12 +77,12 @@ export default function Trivia() {
 
   return (
     <div
-      className="h-screen flex items-center justify-center p-6 text-center relative bg-cover bg-center"
+      className="h-screen flex items-center justify-center p-5 text-center relative bg-cover bg-center"
       style={{ backgroundImage: "url('/images/trivia-bg.jpeg')" }}
     >
       <div className="absolute inset-0 bg-black/50"></div>
 
-      <div className="relative z-10 flex w-full flex-col items-center gap-6 text-white">
+      <div className="relative z-10 flex w-full flex-col items-center gap-5 text-white">
         <a
           href="/"
           className="absolute top-0 right-0 rounded-full bg-white px-4 py-2 text-sm font-bold text-black shadow"
