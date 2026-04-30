@@ -49,7 +49,7 @@ export default function Trivia() {
         className="h-screen flex items-center justify-center p-6 text-center relative bg-cover bg-center"
         style={{ backgroundImage: "url('/images/trivia-bg.jpeg')" }}
       >
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
 
         <div className="relative z-10 flex flex-col items-center gap-5 text-white">
           <h1 className="text-3xl font-bold drop-shadow-lg">{getMessage()}</h1>
