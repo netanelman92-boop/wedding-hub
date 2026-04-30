@@ -73,62 +73,69 @@ export default function Upload() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-stone-100 p-6 text-center relative">
-      <a
-        href="/"
-        className="absolute top-5 right-5 rounded-full bg-white px-4 py-2 text-sm font-bold shadow"
-      >
-        חזרה
-      </a>
+    <div
+      className="min-h-screen flex flex-col items-center justify-center gap-6 p-6 text-center relative bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/upload-bg.jpeg')" }}
+    >
+      <div className="absolute inset-0 bg-black/50"></div>
 
-      <h1 className="text-3xl font-bold">תמונה לאלבום 📸</h1>
+      <div className="relative z-10 w-full flex flex-col items-center gap-6">
+        <a
+          href="/"
+          className="absolute top-5 right-5 rounded-full bg-white px-4 py-2 text-sm font-bold shadow"
+        >
+          חזרה
+        </a>
 
-      {!preview && (
-        <label className="w-full max-w-sm rounded-2xl bg-black px-6 py-5 text-white font-bold shadow cursor-pointer">
-          צלם תמונה 📸
-          <input
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-        </label>
-      )}
+        <h1 className="text-3xl font-bold text-white">תמונה לאלבום 📸</h1>
 
-      {preview && (
-        <>
-          <img
-            src={preview}
-            alt="תצוגה מקדימה"
-            className="max-h-80 w-full max-w-sm rounded-2xl object-cover shadow"
-          />
+        {!preview && (
+          <label className="w-full max-w-sm rounded-2xl bg-black px-6 py-5 text-white font-bold shadow cursor-pointer">
+            צלם תמונה 📸
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+          </label>
+        )}
 
-          <div className="flex w-full max-w-sm gap-3">
-            <button
-              onClick={handleRetake}
-              disabled={isUploading}
-              className="w-1/2 rounded-2xl bg-gray-300 px-4 py-4 font-bold disabled:opacity-50"
-            >
-              צלם מחדש
-            </button>
+        {preview && (
+          <>
+            <img
+              src={preview}
+              alt="תצוגה מקדימה"
+              className="max-h-80 w-full max-w-sm rounded-2xl object-cover shadow"
+            />
 
-            <button
-              onClick={handleUpload}
-              disabled={isUploading}
-              className="w-1/2 rounded-2xl bg-black px-4 py-4 text-white font-bold disabled:opacity-50"
-            >
-              {isUploading ? "מעלה..." : "העלה לגלריה"}
-            </button>
-          </div>
-        </>
-      )}
+            <div className="flex w-full max-w-sm gap-3">
+              <button
+                onClick={handleRetake}
+                disabled={isUploading}
+                className="w-1/2 rounded-2xl bg-gray-300 px-4 py-4 font-bold disabled:opacity-50"
+              >
+                צלם מחדש
+              </button>
 
-      {message && <p className="font-bold text-green-700">{message}</p>}
+              <button
+                onClick={handleUpload}
+                disabled={isUploading}
+                className="w-1/2 rounded-2xl bg-black px-4 py-4 text-white font-bold disabled:opacity-50"
+              >
+                {isUploading ? "מעלה..." : "העלה לגלריה"}
+              </button>
+            </div>
+          </>
+        )}
 
-      <a href="/gallery" className="underline">
-        מעבר לגלריה
-      </a>
+        {message && <p className="font-bold text-white">{message}</p>}
+
+        <a href="/gallery" className="underline text-white font-bold">
+          מעבר לגלריה
+        </a>
+      </div>
     </div>
   );
 }
