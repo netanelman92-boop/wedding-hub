@@ -45,19 +45,30 @@ export default function Trivia() {
 
   if (finished) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center text-center gap-5 p-6 bg-stone-100">
-        <h1 className="text-3xl font-bold">{getMessage()}</h1>
+      <div
+        className="h-screen flex items-center justify-center p-6 text-center relative bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/trivia-bg.jpeg')" }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
 
-        <p className="text-lg">
-          עניתם נכון על {score} מתוך {selectedQuestions.length}
-        </p>
+        <div className="relative z-10 flex flex-col items-center gap-5 text-white">
+          <h1 className="text-3xl font-bold">{getMessage()}</h1>
 
-        <a
-          href="/upload"
-          className="mt-4 rounded-2xl bg-black px-6 py-4 text-white font-bold"
-        >
-          המשך להעלאת תמונה 📸
-        </a>
+          <p className="text-lg">
+            עניתם נכון על {score} מתוך {selectedQuestions.length}
+          </p>
+
+          <a
+            href="/upload"
+            className="mt-4 rounded-2xl bg-black px-6 py-4 text-white font-bold shadow"
+          >
+            המשך להעלאת תמונה 📸
+          </a>
+
+          <a href="/" className="text-sm underline">
+            חזרה למסך הבית
+          </a>
+        </div>
       </div>
     );
   }
@@ -65,43 +76,50 @@ export default function Trivia() {
   const q = selectedQuestions[current];
 
   return (
-  <div className="h-screen flex flex-col items-center justify-center p-6 text-center gap-6 bg-stone-100 relative">
-    <a
-      href="/"
-      className="absolute top-5 right-5 rounded-full bg-white px-4 py-2 text-sm font-bold shadow"
+    <div
+      className="h-screen flex items-center justify-center p-6 text-center relative bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/trivia-bg.jpeg')" }}
     >
-      חזרה
-    </a>
+      <div className="absolute inset-0 bg-black/50"></div>
 
-    <p className="text-sm text-stone-500">
-      שאלה {current + 1} מתוך {selectedQuestions.length}
-    </p>
+      <div className="relative z-10 flex w-full flex-col items-center gap-6 text-white">
+        <a
+          href="/"
+          className="absolute top-0 right-0 rounded-full bg-white px-4 py-2 text-sm font-bold text-black shadow"
+        >
+          חזרה
+        </a>
 
-      <h1 className="text-2xl font-bold">{q.question}</h1>
+        <p className="text-sm text-white/80">
+          שאלה {current + 1} מתוך {selectedQuestions.length}
+        </p>
 
-      <div className="flex flex-col gap-3 w-full max-w-sm">
-        {q.answers.map((answer, index) => {
-          let buttonColor = "bg-white text-black";
+        <h1 className="text-2xl font-bold">{q.question}</h1>
 
-          if (selectedAnswer !== null) {
-            if (index === q.correct) {
-              buttonColor = "bg-green-500 text-white";
-            } else if (index === selectedAnswer) {
-              buttonColor = "bg-red-500 text-white";
+        <div className="flex w-full max-w-sm flex-col gap-3">
+          {q.answers.map((answer, index) => {
+            let buttonColor = "bg-white text-black";
+
+            if (selectedAnswer !== null) {
+              if (index === q.correct) {
+                buttonColor = "bg-green-500 text-white";
+              } else if (index === selectedAnswer) {
+                buttonColor = "bg-red-500 text-white";
+              }
             }
-          }
 
-          return (
-            <button
-              key={index}
-              onClick={() => handleAnswer(index)}
-              disabled={selectedAnswer !== null}
-              className={`${buttonColor} p-4 rounded-xl font-bold shadow transition`}
-            >
-              {answer}
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={index}
+                onClick={() => handleAnswer(index)}
+                disabled={selectedAnswer !== null}
+                className={`${buttonColor} p-4 rounded-xl font-bold shadow transition`}
+              >
+                {answer}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
