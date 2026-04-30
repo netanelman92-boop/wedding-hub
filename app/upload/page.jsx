@@ -7,6 +7,7 @@ export default function Upload() {
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files?.[0];
@@ -23,40 +24,49 @@ export default function Upload() {
   };
 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file || isUploading) return;
 
-    const fileName = `${Date.now()}.jpg`;
+    setIsUploading(true);
+    setMessage("מעלה תמונה... רגע קטן 📸");
 
-    // העלאה ל-Storage
-    const { data, error } = await supabase.storage
+    const fileName = `${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
       .from("wedding-images")
       .upload(fileName, file);
 
     if (error) {
-      setMessage("שגיאה בהעלאה ❌");
+      setMessage("שגיאה בהעלאה ❌ נסו שוב");
+      setIsUploading(false);
       return;
     }
 
-    // קבלת URL ציבורי
     const { data: publicUrlData } = supabase.storage
       .from("wedding-images")
       .getPublicUrl(fileName);
 
     const imageUrl = publicUrlData.publicUrl;
 
-    // שמירה בטבלה
-    await supabase.from("images").insert([
+    const { error: insertError } = await supabase.from("images").insert([
       {
         image_url: imageUrl,
       },
     ]);
 
+    if (insertError) {
+      setMessage("התמונה עלתה, אבל לא נוספה לגלריה ❌");
+      setIsUploading(false);
+      return;
+    }
+
     setPreview(null);
     setFile(null);
-    setMessage("התמונה עלתה לגלריה 🎉");
+    setIsUploading(false);
+    setMessage("התמונה נוספה לגלריית החתונה 🎉");
   };
 
   const handleRetake = () => {
+    if (isUploading) return;
     setPreview(null);
     setFile(null);
     setMessage("");
@@ -90,29 +100,31 @@ export default function Upload() {
         <>
           <img
             src={preview}
-            alt="preview"
+            alt="תצוגה מקדימה"
             className="max-h-80 w-full max-w-sm rounded-2xl object-cover shadow"
           />
 
           <div className="flex w-full max-w-sm gap-3">
             <button
               onClick={handleRetake}
-              className="w-1/2 rounded-2xl bg-gray-300 px-4 py-4 font-bold"
+              disabled={isUploading}
+              className="w-1/2 rounded-2xl bg-gray-300 px-4 py-4 font-bold disabled:opacity-50"
             >
               צלם מחדש
             </button>
 
             <button
               onClick={handleUpload}
-              className="w-1/2 rounded-2xl bg-black px-4 py-4 text-white font-bold"
+              disabled={isUploading}
+              className="w-1/2 rounded-2xl bg-black px-4 py-4 text-white font-bold disabled:opacity-50"
             >
-              העלה לגלריה
+              {isUploading ? "מעלה..." : "העלה לגלריה"}
             </button>
           </div>
         </>
       )}
 
-      {message && <p className="font-bold">{message}</p>}
+      {message && <p className="font-bold text-green-700">{message}</p>}
 
       <a href="/gallery" className="underline">
         מעבר לגלריה

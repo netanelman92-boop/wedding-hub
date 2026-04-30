@@ -5,20 +5,16 @@ import { supabase } from "@/lib/supabase";
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchImages = async () => {
       const { data, error } = await supabase
         .from("images")
-        .select("image_url, created_at")
+        .select("image_url")
         .order("created_at", { ascending: false });
 
-      if (error) {
-        console.log(error);
-        return;
-      }
-
-      setImages(data);
+      if (!error) setImages(data);
     };
 
     fetchImages();
@@ -26,31 +22,39 @@ export default function Gallery() {
 
   return (
     <div className="min-h-screen bg-stone-100 p-6">
-      <a
-        href="/"
-        className="rounded-full bg-white px-4 py-2 text-sm font-bold shadow"
-      >
+      <a href="/" className="bg-white px-4 py-2 rounded-full shadow font-bold">
         חזרה
       </a>
 
-      <h1 className="mt-6 text-center text-3xl font-bold">
+      <h1 className="text-3xl font-bold text-center mt-6">
         גלריית חתונה 🖼️
       </h1>
 
       {images.length === 0 ? (
-        <p className="mt-10 text-center text-stone-600">
-          עדיין לא הועלו תמונות
-        </p>
+        <p className="text-center mt-10">אין עדיין תמונות</p>
       ) : (
-        <div className="mt-8 grid grid-cols-2 gap-4">
-          {images.map((image, index) => (
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          {images.map((img, index) => (
             <img
               key={index}
-              src={image.image_url}
-              alt={`תמונה ${index + 1}`}
-              className="h-48 w-full rounded-2xl object-cover shadow"
+              src={img.image_url}
+              onClick={() => setSelectedImage(img.image_url)}
+              className="h-48 w-full object-cover rounded-2xl shadow cursor-pointer"
             />
           ))}
+        </div>
+      )}
+
+      {/* תמונה מוגדלת */}
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+        >
+          <img
+            src={selectedImage}
+            className="max-h-[90%] max-w-[90%] rounded-2xl"
+          />
         </div>
       )}
     </div>
