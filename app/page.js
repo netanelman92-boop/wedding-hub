@@ -3,12 +3,11 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main
-      className="min-h-screen bg-cover flex items-center justify-center p-6"
-style={{ 
-  backgroundImage: "url('/images/home-bg.jpeg')",
-  backgroundPosition: "center 30%"
-}}
-      style={{ backgroundImage: "url('/images/home-bg.jpeg')" }}
+      className="min-h-screen bg-cover flex items-center justify-center p-6 relative"
+      style={{
+        backgroundImage: "url('/images/home-bg.jpeg')",
+        backgroundPosition: "center 30%",
+      }}
     >
       <div className="absolute inset-0 bg-black/50"></div>
 
