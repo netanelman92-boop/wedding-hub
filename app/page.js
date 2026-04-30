@@ -9,7 +9,7 @@ export default function Home() {
         backgroundPosition: "center 30%",
       }}
     >
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black/30"></div>
 
       <div className="relative z-10 flex w-full max-w-sm flex-col gap-5">
         <Link href="/trivia">
